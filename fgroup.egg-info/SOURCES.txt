@@ -1,0 +1,8 @@
+LICENSE
+README.md
+fgroup.py
+setup.py
+fgroup.egg-info/PKG-INFO
+fgroup.egg-info/SOURCES.txt
+fgroup.egg-info/dependency_links.txt
+fgroup.egg-info/top_level.txt
