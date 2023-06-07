@@ -166,6 +166,14 @@ class Group:
                     return False
         return True
 
+    def to_permutation_list(self):
+        permutation_list = []
+        element_to_index = {element: index for index, element in enumerate(self.elements)}
+        for element in self.elements:
+            permutation = [element_to_index[self.operation(element, other_element)] for other_element in self.elements]
+            permutation_list.append(permutation)
+        return permutation_list
+
 # def multiplication_mod_6(a, b):
 #     return (a * b) % 6
 
@@ -177,6 +185,20 @@ def addition_mod_5(a, b):
 
 def addition_mod_15(a, b):
     return (a + b) % 15
+
+def convert_permutation_to_elements(permutations):
+    elements = set()
+    for permutation in permutations:
+        elements.update(permutation)
+    return elements
+
+# Example permutation list
+permutations = [[1, 2, 3], [2, 3, 1], [3, 1, 2]]
+
+# Convert permutation list to elements
+group_elements = convert_permutation_to_elements(permutations)
+
+print("Elements of the group:", group_elements)
 
 elements = {0, 1, 2, 3}
 elements = {0, 1, 2, 3, 4}
@@ -245,3 +267,9 @@ if group.is_abelian():
     print("The group is Abelian.")
 else:
     print("The group is not Abelian.")
+
+# Print permutation list
+permutations = group.to_permutation_list()
+print(f"Permutation Lists:")
+for permutation in permutations:
+    print(str(permutation))
