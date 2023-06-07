@@ -94,6 +94,78 @@ class Group:
     def is_acyclic(self):
         return not self.is_cyclic()
 
+    def get_order(self):
+        return len(self.elements)
+
+    def get_element_order(self, element):
+        current_element = element
+        power = 1
+
+        while current_element != self.identity_element:
+            current_element = self.operation(current_element, element)
+            power += 1
+
+        return power
+
+    def generate_multiplication_table(self):
+        table = {}
+        for a in self.elements:
+            row = {}
+            for b in self.elements:
+                result = self.operation(a, b)
+                row[b] = result
+            table[a] = row
+        return table
+
+    def generate_md_multiplication_table(self):
+        headers = list(self.elements)
+        table = []
+
+        # Generate header row
+        header_row = "|   | "
+        for header in headers:
+            header_row += str(header) + " | "
+        table.append(header_row)
+
+        # Generate separator row
+        separator_row = "|---|"
+        for _ in headers:
+            separator_row += "---|"
+        table.append(separator_row)
+
+        # Generate table rows
+        for a in self.elements:
+            row = "| " + str(a) + " | "
+            for b in self.elements:
+                result = self.operation(a, b)
+                row += str(result) + " | "
+            table.append(row)
+
+        return "\n".join(table)
+
+    def find_normal_subgroups(self):
+        normal_subgroups = []
+        for subgroup in self.find_subgroups():
+            is_normal = True
+            for element in self.elements:
+                for subgroup_element in subgroup.elements:
+                    conjugation = self.operation(self.operation(element, subgroup_element), self.inverse(element))
+                    if conjugation not in subgroup.elements:
+                        is_normal = False
+                        break
+                if not is_normal:
+                    break
+            if is_normal:
+                normal_subgroups.append(subgroup)
+        return normal_subgroups
+
+    def is_abelian(self):
+        for a in self.elements:
+            for b in self.elements:
+                if self.operation(a, b) != self.operation(b, a):
+                    return False
+        return True
+
 # def multiplication_mod_6(a, b):
 #     return (a * b) % 6
 
@@ -101,12 +173,18 @@ def addition_mod_4(a, b):
     return (a * b) % 4
 
 def addition_mod_5(a, b):
-    return (a + b) % 4
+    return (a + b) % 5
 
-elements = {0, 1, 2, 3}#, 4}
+def addition_mod_15(a, b):
+    return (a + b) % 15
+
+elements = {0, 1, 2, 3}
+elements = {0, 1, 2, 3, 4}
+# elements = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
 
 # Create a group
 group = Group(elements, addition_mod_5)
+# group = Group(elements, addition_mod_15)
 
 # Check if it's a group
 if group.is_group():
@@ -125,10 +203,45 @@ print("Inverse elements:")
 for element in elements:
     inverse = group.inverse(element)
     print(f"Inverse of {element} is {inverse}")
-# (2 + x) / 5 = 0 ==> 3 is inverse of 2
-# (4 + x) / 5 = 0 ==> 1 is inverse of 4
 
 print("Identity element:", group.identity_element)
 
 print("Is Cyclic: ", group.is_cyclic())
 print("Is A-Cyclic: ", group.is_acyclic())
+
+# Find order of group
+order = group.get_order()
+print("The order of the group is:", order)
+
+# Find order elements
+print("Inverse elements:")
+for element in elements:
+    order = group.get_element_order(element)
+    print(f"Order of element {element} is {order}")
+
+# Generate the multiplication table
+multiplication_table = group.generate_multiplication_table()
+
+# Print the multiplication list
+# print("Multiplication Table:")
+# for a, row in multiplication_table.items():
+#     for b, result in row.items():
+#         print(f"{a} * {b} = {result}")
+
+# Print the multiplication table
+print("Multiplication Table:")
+print(group.generate_md_multiplication_table())
+
+# Find normal subgroups
+normal_subgroups = group.find_normal_subgroups()
+
+# Print the normal subgroups
+print("Normal Subgroups:")
+for subgroup in normal_subgroups:
+    print(subgroup.elements)
+
+# Check if the group is Abelian
+if group.is_abelian():
+    print("The group is Abelian.")
+else:
+    print("The group is not Abelian.")
