@@ -4,6 +4,13 @@
 
 FGroup is a software tool that allows you to perform various operations and analyses on mathematical groups. It provides a Python class called Group that represents a group and offers a set of methods to work with groups, including checking group properties, finding subgroups, generating multiplication tables, identifying normal subgroups, determining if a group is Abelian, and more.
 
+## Installing
+
+```bash
+$ pip install dist/fgroup-1.0.0.tar.gz
+Processing c:\users\max\fgroup\dist\fgroup-1.0.0.tar.gz
+```
+
 ## Getting Started
 
 To use the FGroup software, follow these steps:
