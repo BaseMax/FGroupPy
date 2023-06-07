@@ -12,6 +12,7 @@ class Group:
             for b in self.elements:
                 result = self.operation(a, b)
                 if result not in self.elements:
+                    print(a, b)
                     self.why_not_group = [1, a, b]
                     return False
 
@@ -192,6 +193,41 @@ def convert_permutation_to_elements(permutations):
         elements.update(permutation)
     return elements
 
+def addition_v4(a, b):
+    if a == 'a' and b == 'b':
+        return 'c'
+    if a == 'b' and b == 'a':
+        return 'c'
+    if a == 'b' and b == 'c':
+        return 'a'
+    if a == 'c' and b == 'b':
+        return 'a'
+    if a == 'c' and b == 'a':
+        return 'b'
+    if a == 'a' and b == 'c':
+        return 'b'
+
+    if a == 'e' and b == 'e':
+        return 'e'
+    if a == 'e' and b == 'a':
+        return 'a'
+    if a == 'e' and b == 'b':
+        return 'b'
+    if a == 'e' and b == 'c':
+        return 'c'
+
+    if a == 'a' and b == 'a':
+        return 'e'
+    if a == 'b' and b == 'b':
+        return 'e'
+    if a == 'c' and b == 'c':
+        return 'e'
+
+    if addition_v4(b, a) != None:
+        return addition_v4(b, a)
+
+    return None
+
 # Example permutation list
 permutations = [[1, 2, 3], [2, 3, 1], [3, 1, 2]]
 
@@ -203,10 +239,12 @@ print("Elements of the group:", group_elements)
 elements = {0, 1, 2, 3}
 elements = {0, 1, 2, 3, 4}
 # elements = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
+elements = {'e', 'a', 'b', 'c'}
 
 # Create a group
-group = Group(elements, addition_mod_5)
+# group = Group(elements, addition_mod_5)
 # group = Group(elements, addition_mod_15)
+group = Group(elements, addition_v4)
 
 # Check if it's a group
 if group.is_group():
