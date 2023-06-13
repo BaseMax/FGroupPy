@@ -1,8 +1,6 @@
-# FGroup Software Group
+# FGroup Software Group in Python (FGroupPy)
 
-## Overview
-
-FGroup is a software tool that allows you to perform various operations and analyses on mathematical groups. It provides a Python class called Group that represents a group and offers a set of methods to work with groups, including checking group properties, finding subgroups, generating multiplication tables, identifying normal subgroups, determining if a group is Abelian, and more.
+FGroupPy is a software tool that allows you to perform various operations and analyses on mathematical groups. It provides a Python class called Group that represents a group and offers a set of methods to work with groups, including checking group properties, finding subgroups, generating multiplication tables, identifying normal subgroups, determining if a group is Abelian, and more.
 
 ## Installing
 
